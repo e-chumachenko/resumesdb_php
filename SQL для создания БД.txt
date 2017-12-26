@@ -1,0 +1,55 @@
+﻿SQL запросы для создания базы данных resumesdb.sql
+
+CREATE DATABASE resumesdb DEFAULT CHARACTER SET utf8;
+USE resumesdb;
+
+GRANT ALL ON resumesdb.* TO 'portfolio'@'localhost' IDENTIFIED BY 'rdb';
+GRANT ALL ON resumesdb.* TO 'portfolio'@'127.0.0.1' IDENTIFIED BY 'rdb';
+
+CREATE TABLE users (
+   user_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   email VARCHAR(128) UNIQUE,
+   passwordh VARCHAR(128),
+   INDEX(email), INDEX(passwordh)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE resumes (
+  resume_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INTEGER NOT NULL, 
+  first_name VARCHAR(128),
+  patronymic_name VARCHAR(128),
+  last_name VARCHAR(128),
+  job_title VARCHAR(128),
+  resume_cv TEXT,
+  INDEX(last_name), INDEX(job_title),
+  CONSTRAINT FOREIGN KEY (user_id) REFERENCES users (user_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE jobs (
+  job_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  resume_id INTEGER NOT NULL,
+  year_start INTEGER,
+  year_finish INTEGER,
+  description TEXT,
+  CONSTRAINT FOREIGN KEY (resume_id) REFERENCES resumes (resume_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE institutions (
+   institution_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(128) UNIQUE,
+   INDEX(name)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE education (
+  resume_id INTEGER NOT NULL,
+  institution_id INTEGER NOT NULL,
+  PRIMARY KEY(resume_id, institution_id),
+  year INTEGER, 
+  degree TEXT,
+  CONSTRAINT FOREIGN KEY (resume_id) REFERENCES resumes (resume_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (institution_id) REFERENCES institutions (institution_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,43 @@
+@media (min-width: 680px) {
+    #lside, #rside {
+        display: inline-block;
+        float: left;
+        width: 45%;
+    }
+}
+#c{
+    text-align: center;
+}
+td, th {
+    border: 3px double black;
+    padding: 0.3rem;
+}
+th {
+    text-align: center;
+}
+#ed {
+    border-radius: 25%;
+    background-color: #eaf1f7;
+}
+h3 {
+    text-align: center;
+    font-weight:normal;
+}
+.lgnp{
+    width: 80%;
+    height: 50%;
+    margin: 5% auto;
+    text-align: center;
+    font-size: 2rem;
+}   
+.r{
+    color: #ff0000;
+}
+.ui-helper-hidden-accessible { 
+    display:none; 
+}
+.ui-menu {
+    width: 20%;
+    background: #F0FFFF;
+    z-index: 2;
+}
